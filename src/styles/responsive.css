@@ -1,0 +1,75 @@
+/* Media Queries & Responsive Utilities */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .heist-hero-title {
+    font-size: 3.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  .grid-cols-4,
+  .grid-cols-3,
+  .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .heist-hero-title {
+    font-size: 2.5rem !important;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .show-mobile {
+    display: block !important;
+  }
+
+  .mobile-menu-drawer {
+    display: flex !important;
+  }
+
+  .timeline-container::before {
+    left: 20px !important;
+  }
+
+  .timeline-item {
+    width: 100% !important;
+    padding-left: 50px !important;
+    text-align: left !important;
+  }
+
+  .timeline-item::after {
+    left: 11px !important;
+  }
+
+  .timeline-item.right {
+    left: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .heist-hero-title {
+    font-size: 2rem !important;
+  }
+  
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}

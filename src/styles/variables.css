@@ -1,0 +1,57 @@
+:root {
+  /* Color Palette - Cyber Heist / Money Heist Noir */
+  --bg-primary: #090a0f;
+  --bg-secondary: #12131c;
+  --bg-tertiary: #1b1c2a;
+  --bg-card: rgba(22, 24, 38, 0.75);
+  --bg-card-hover: rgba(32, 35, 56, 0.9);
+  --bg-glass: rgba(15, 17, 26, 0.65);
+  --bg-glass-border: rgba(255, 30, 66, 0.2);
+
+  --accent-crimson: #ff1e42;
+  --accent-crimson-glow: rgba(255, 30, 66, 0.45);
+  --accent-red-dark: #b3001f;
+  --accent-gold: #ffd159;
+  --accent-gold-glow: rgba(255, 209, 89, 0.4);
+  --accent-cyan: #00f2fe;
+  --accent-cyan-glow: rgba(0, 242, 254, 0.35);
+  --accent-emerald: #00f090;
+
+  --text-main: #f5f6fa;
+  --text-muted: #9ba1b8;
+  --text-dim: #626782;
+  --text-inverse: #090a0f;
+
+  /* Typography */
+  --font-primary: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Gradients */
+  --grad-heist: linear-gradient(135deg, #ff1e42 0%, #a8001e 100%);
+  --grad-gold: linear-gradient(135deg, #ffe259 0%, #ffa751 100%);
+  --grad-cyber: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --grad-dark: linear-gradient(180deg, rgba(9, 10, 15, 0.9) 0%, rgba(18, 19, 28, 0.98) 100%);
+  --grad-radial-glow: radial-gradient(circle at 50% 50%, rgba(255, 30, 66, 0.15) 0%, transparent 70%);
+
+  /* Borders & Shadows */
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+  --border-crimson: 1px solid rgba(255, 30, 66, 0.3);
+  --border-gold: 1px solid rgba(255, 209, 89, 0.3);
+  --shadow-neon-red: 0 0 25px rgba(255, 30, 66, 0.35);
+  --shadow-neon-gold: 0 0 25px rgba(255, 209, 89, 0.35);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Layout */
+  --max-width: 1280px;
+  --header-height: 80px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
