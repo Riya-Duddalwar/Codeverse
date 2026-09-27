@@ -146,7 +146,7 @@ export const HomeMission: React.FC<HomeMissionProps> = ({ onPlayClick, onRegiste
                     marginBottom: '1rem'
                   }}
                 >
-                  // PHASE {pillar.num}
+
                 </div>
 
                 {/* Pillar Icon & Title */}

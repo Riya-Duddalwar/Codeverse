@@ -165,9 +165,7 @@ export const Hero: React.FC<HeroProps> = ({
     targetProgressRef.current = Math.min(1.0, targetProgressRef.current + 0.22);
   }, [onPlayClick]);
 
-  // Current frame calculated from clamped progress
-  const clampedFrameProgress = Math.min(1.0, Math.max(0, progressState));
-  const displayedFrameIndex = Math.min(totalFrames - 1, Math.floor(clampedFrameProgress * (totalFrames - 1)));
+
 
   // Reveal Timing calculations:
   // 0.93 - 0.96: Dark cinematic vignette
@@ -255,20 +253,7 @@ export const Hero: React.FC<HeroProps> = ({
           </span>
         </div>
 
-        <div
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.72rem',
-            color: 'var(--color-muted)',
-            letterSpacing: '0.1em',
-            background: 'rgba(8, 8, 10, 0.7)',
-            padding: '0.25rem 0.75rem',
-            borderRadius: '999px',
-            border: '1px solid rgba(244, 240, 232, 0.12)'
-          }}
-        >
-          FRAME: {String(displayedFrameIndex + 1).padStart(3, '0')} / {totalFrames}
-        </div>
+
       </div>
 
       {/* 4. Bottom "SCROLL TO EXPLORE" Indicator (Visible while progress < 0.92) */}
@@ -415,25 +400,33 @@ export const Hero: React.FC<HeroProps> = ({
               <h1
                 className="hero-title-text"
                 style={{
-                  fontSize: '4.2rem',
-                  lineHeight: 0.95,
+                  fontSize: 'clamp(2.1rem, 3.2vw, 3.25rem)',
+                  lineHeight: 1.05,
                   fontWeight: 900,
                   textTransform: 'uppercase',
-                  letterSpacing: '-0.03em',
+                  letterSpacing: '-0.02em',
                   color: 'var(--color-cream)',
-                  margin: 0
+                  margin: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.65rem',
+                  flexWrap: 'wrap',
+                  maxWidth: '100%'
                 }}
               >
-                CODE<span style={{ color: 'var(--color-red)' }}>VERSE</span>{' '}
+                <span>
+                  CODE<span style={{ color: 'var(--color-red)' }}>VERSE</span>
+                </span>
                 <span
                   style={{
-                    fontSize: '2rem',
-                    verticalAlign: 'super',
+                    fontSize: '0.46rem',
+                    lineHeight: 1,
                     color: 'var(--color-red)',
                     fontFamily: 'var(--font-mono)',
                     border: '1.5px solid var(--color-red)',
-                    padding: '2px 8px',
-                    borderRadius: '6px'
+                    padding: '3px 8px',
+                    borderRadius: '6px',
+                    letterSpacing: '0.4em'
                   }}
                 >
                   2.0

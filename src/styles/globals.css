@@ -9,6 +9,12 @@
   padding: 0;
 }
 
+@media (pointer: fine) {
+  *, *::before, *::after, html, body, a, button, input, select, textarea {
+    cursor: none !important;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   font-family: var(--font-primary);

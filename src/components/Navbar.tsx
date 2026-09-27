@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       setIsScrolled(window.scrollY > 50);
 
       // Scroll Spy for active nav item
-      const sections = ['faq', 'prizes', 'phases', 'timeline', 'about', 'hero-container'];
+      const sections = ['faq', 'contact', 'prizes', 'phases', 'timeline', 'about', 'hero-container'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -50,6 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'TIMELINE', href: '#timeline', id: 'timeline' },
     { label: 'PHASES', href: '#phases', id: 'phases' },
     { label: 'PRIZES', href: '#prizes', id: 'prizes' },
+    { label: 'CONTACT US', href: '#contact', id: 'contact' },
     { label: "FAQ'S", href: '#faq', id: 'faq' }
   ];
 
@@ -203,13 +204,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* CENTER: Navigation Links (HOME, ABOUT, TIMELINE, PHASES, PRIZES, FAQ'S) */}
+        {/* CENTER: Navigation Links (HOME, ABOUT, TIMELINE, PHASES, PRIZES, CONTACT US, FAQ'S) */}
         <nav
           className="hide-desktop-nav"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '1.5rem'
+            gap: '1.25rem'
           }}
         >
           {navLinks.map((link) => {

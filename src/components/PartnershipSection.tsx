@@ -20,7 +20,7 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = ({
 }) => {
   return (
     <section
-      id="partnership"
+      id="contact"
       className="section-padding"
       style={{
         position: 'relative',
@@ -28,6 +28,9 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = ({
         borderBottom: '1px solid rgba(244, 240, 232, 0.08)'
       }}
     >
+      {/* Target anchors for #partner and legacy #partnership */}
+      <div id="partner" style={{ position: 'absolute', top: 0, left: 0 }} />
+      <div id="partnership" style={{ position: 'absolute', top: 0, left: 0 }} />
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 4rem auto' }}>
@@ -114,7 +117,7 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = ({
                   color: 'var(--color-dim)'
                 }}
               >
-                // OPPORTUNITY 0{idx + 1}
+
               </div>
             </div>
           ))}

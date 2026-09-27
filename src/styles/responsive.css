@@ -4,6 +4,7 @@
   .grid-cols-5 {
     grid-template-columns: repeat(3, 1fr) !important;
   }
+
   .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
@@ -59,7 +60,7 @@
   }
 
   .hero-title-text {
-    font-size: 2.75rem !important;
+    font-size: clamp(1.75rem, 6.5vw, 2.35rem) !important;
   }
 
   .hero-buttons-wrapper {
