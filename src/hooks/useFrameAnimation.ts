@@ -1,139 +1,148 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { FRAME_PATHS, FRAME_COUNT } from '../data/framesData';
 
-interface UseFrameAnimationProps {
-  frameCount?: number;
-  framePrefix?: string;
-  frameExtension?: string;
-  padLength?: number;
+interface UseFrameAnimationOptions {
+  framePaths?: string[];
 }
 
 export function useFrameAnimation({
-  frameCount = 240,
-  framePrefix = '/frames/frame_',
-  frameExtension = '.webp',
-  padLength = 3
-}: UseFrameAnimationProps = {}) {
-  const [currentFrame, setCurrentFrame] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  framePaths = FRAME_PATHS
+}: UseFrameAnimationOptions = {}) {
   const [loadedCount, setLoadedCount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const totalFrames = framePaths.length || FRAME_COUNT;
 
-  // Preload frames
+  // Preload all 60 frames into refs
   useEffect(() => {
     let isCancelled = false;
-    const loadedImages: HTMLImageElement[] = [];
-    let loaded = 0;
+    const images: HTMLImageElement[] = [];
+    let count = 0;
 
-    const getFrameUrl = (index: number) => {
-      const paddedIndex = String(index).padStart(padLength, '0');
-      return `${framePrefix}${paddedIndex}${frameExtension}`;
-    };
-
-    for (let i = 0; i < frameCount; i++) {
+    for (let i = 0; i < totalFrames; i++) {
       const img = new Image();
-      img.src = getFrameUrl(i);
+      img.src = framePaths[i];
+
       img.onload = () => {
         if (isCancelled) return;
-        loaded++;
-        setLoadedCount(loaded);
-        if (loaded >= Math.min(20, frameCount)) {
+        count++;
+        setLoadedCount(count);
+        if (count >= 1) {
+          // As soon as first frame is ready, initial render can happen
           setIsLoaded(true);
         }
       };
+
       img.onerror = () => {
         if (isCancelled) return;
-        loaded++;
-        setLoadedCount(loaded);
+        count++;
+        setLoadedCount(count);
       };
-      loadedImages.push(img);
+
+      images.push(img);
     }
 
-    imagesRef.current = loadedImages;
+    imagesRef.current = images;
 
     return () => {
       isCancelled = true;
     };
-  }, [frameCount, framePrefix, frameExtension, padLength]);
+  }, [framePaths, totalFrames]);
 
-  // Render specific frame onto canvas
-  const renderFrame = useCallback((frameIndex: number) => {
+  // Synchronize canvas resolution with DPR
+  const syncCanvasSize = useCallback((canvas: HTMLCanvasElement) => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.floor(window.innerWidth * dpr);
+    const height = Math.floor(window.innerHeight * dpr);
+
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+  }, []);
+
+  // Render frame with cover mathematics and sub-frame interpolation
+  const renderProgress = useCallback((progress: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    const safeIndex = Math.max(0, Math.min(frameIndex, frameCount - 1));
-    const img = imagesRef.current[safeIndex];
+    syncCanvasSize(canvas);
 
-    if (img && img.complete && img.naturalWidth > 0) {
-      // Clear and draw with cover aspect ratio
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const hRatio = canvas.width / img.width;
-      const vRatio = canvas.height / img.height;
-      const ratio = Math.max(hRatio, vRatio);
-      const centerShiftX = (canvas.width - img.width * ratio) / 2;
-      const centerShiftY = (canvas.height - img.height * ratio) / 2;
-      
-      ctx.drawImage(
-        img,
-        0, 0, img.width, img.height,
-        centerShiftX, centerShiftY, img.width * ratio, img.height * ratio
+    // Clamped progress between 0 and 1
+    const clampedProgress = Math.max(0, Math.min(1, progress));
+
+    // Floating-point frame position (0 to 59)
+    const framePosition = clampedProgress * (totalFrames - 1);
+    const currentFrameIndex = Math.floor(framePosition);
+    const nextFrameIndex = Math.min(totalFrames - 1, currentFrameIndex + 1);
+    const fraction = framePosition - currentFrameIndex;
+
+    const imgCurrent = imagesRef.current[currentFrameIndex];
+    const imgNext = imagesRef.current[nextFrameIndex];
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    const drawCoverImage = (img: HTMLImageElement, alpha = 1.0) => {
+      if (!img || !img.complete || img.naturalWidth === 0) return false;
+
+      const scale = Math.max(
+        canvas.width / img.naturalWidth,
+        canvas.height / img.naturalHeight
       );
-    } else {
-      // Sleek fallback canvas visualization if images are placeholder
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Cyber Heist Vault Radar visualization
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const progress = safeIndex / frameCount;
+      const renderWidth = img.naturalWidth * scale;
+      const renderHeight = img.naturalHeight * scale;
+      const x = (canvas.width - renderWidth) / 2;
+      const y = (canvas.height - renderHeight) / 2;
 
-      ctx.save();
-      ctx.fillStyle = '#0e1018';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(img, x, y, renderWidth, renderHeight);
+      return true;
+    };
 
-      // Rotating Vault Ring
-      ctx.strokeStyle = 'rgba(255, 30, 66, 0.4)';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, Math.min(centerX, centerY) * 0.65, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Rotating Gear Teeth
-      const teeth = 24;
-      const angleStep = (Math.PI * 2) / teeth;
-      const rot = progress * Math.PI * 4;
-
-      for (let i = 0; i < teeth; i++) {
-        const a = rot + i * angleStep;
-        const r1 = Math.min(centerX, centerY) * 0.65;
-        const r2 = r1 + (i % 2 === 0 ? 12 : 6);
-        ctx.beginPath();
-        ctx.moveTo(centerX + Math.cos(a) * r1, centerY + Math.sin(a) * r1);
-        ctx.lineTo(centerX + Math.cos(a) * r2, centerY + Math.sin(a) * r2);
-        ctx.strokeStyle = i % 2 === 0 ? '#ff1e42' : '#ffd159';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+    // Sub-frame crossfade rendering without ghosting
+    // If next frame is available and fraction > 0.05, perform smooth crossfade
+    if (fraction > 0.05 && imgNext && imgNext.complete && imgNext.naturalWidth > 0) {
+      // Draw base current frame
+      const drewCurrent = drawCoverImage(imgCurrent, 1.0);
+      if (!drewCurrent) {
+        ctx.fillStyle = '#08080a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
-
-      // Vault Core Lock Status
-      ctx.fillStyle = '#ff1e42';
-      ctx.font = 'bold 16px "JetBrains Mono", monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(`VAULT SEQUENCE: ${Math.round(progress * 100)}%`, centerX, centerY + 8);
-      ctx.restore();
+      // Blend next frame with opacity fraction
+      drawCoverImage(imgNext, fraction);
+    } else {
+      // Direct sharp render
+      const drew = drawCoverImage(imgCurrent, 1.0);
+      if (!drew) {
+        // Fallback to nearest loaded image
+        let fallbackFound = false;
+        for (let i = currentFrameIndex - 1; i >= 0; i--) {
+          if (imagesRef.current[i]?.complete && imagesRef.current[i]?.naturalWidth > 0) {
+            drawCoverImage(imagesRef.current[i], 1.0);
+            fallbackFound = true;
+            break;
+          }
+        }
+        if (!fallbackFound) {
+          ctx.fillStyle = '#08080a';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      }
     }
 
-    setCurrentFrame(safeIndex);
-  }, [frameCount]);
+    ctx.globalAlpha = 1.0;
+  }, [totalFrames, syncCanvasSize]);
 
   return {
     canvasRef,
-    currentFrame,
-    isLoaded,
+    totalFrames,
     loadedCount,
-    totalFrames: frameCount,
-    renderFrame
+    isLoaded: loadedCount >= totalFrames,
+    isPartiallyLoaded: isLoaded,
+    renderProgress
   };
 }

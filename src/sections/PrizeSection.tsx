@@ -1,10 +1,6 @@
 import React from 'react';
-import { Prizes } from '../components/Prizes';
+import { PrizesSection } from '../components/PrizesSection';
 
 export const PrizeSection: React.FC = () => {
-  return (
-    <section id="prize-section" className="relative">
-      <Prizes />
-    </section>
-  );
+  return <PrizesSection />;
 };

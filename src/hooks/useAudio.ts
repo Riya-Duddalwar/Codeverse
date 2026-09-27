@@ -4,60 +4,50 @@ export function useAudio() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
-  const clickAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize audio elements
+  // Initialize audio elements with existing audio asset
   useEffect(() => {
-    bgAudioRef.current = new Audio('/audio/heist-bg.mp3');
-    bgAudioRef.current.loop = true;
-    bgAudioRef.current.volume = 0.4;
-
-    clickAudioRef.current = new Audio('/audio/click.mp3');
-    clickAudioRef.current.volume = 0.6;
+    // Exact path to the background audio in /public/audio
+    const audioSrc = '/audio/WhatsApp Audio 2026-09-27 at 12.33.06 AM.mpeg';
+    const audio = new Audio(audioSrc);
+    audio.loop = true;
+    audio.volume = 0.35;
+    bgAudioRef.current = audio;
 
     return () => {
       if (bgAudioRef.current) {
         bgAudioRef.current.pause();
         bgAudioRef.current = null;
       }
-      if (clickAudioRef.current) {
-        clickAudioRef.current = null;
-      }
     };
   }, []);
 
-  // Play subtle UI click sound effect (with Web Audio API fallback)
+  // Play subtle tactical UI click sound effect via Web Audio API synth
   const playClick = useCallback(() => {
     if (isMuted) return;
 
-    if (clickAudioRef.current) {
-      clickAudioRef.current.currentTime = 0;
-      clickAudioRef.current.play().catch(() => {
-        // Fallback Web Audio synth beep
-        try {
-          const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
-          if (AudioContext) {
-            const ctx = new AudioContext();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(800, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.15, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.05);
-          }
-        } catch {
-          // ignore
-        }
-      });
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
+      if (AudioCtx) {
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.04);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.04);
+      }
+    } catch {
+      // ignore silently if audio context unavailable
     }
   }, [isMuted]);
 
-  // Toggle ambient heist music
+  // Toggle ambient soundtrack
   const toggleMusic = useCallback(() => {
     if (!bgAudioRef.current) return;
 
@@ -70,7 +60,7 @@ export function useAudio() {
         setIsPlaying(true);
         setIsMuted(false);
       }).catch(() => {
-        // Autoplay policy prevented playback
+        // Autoplay policy prevented immediate playback
         setIsPlaying(false);
         setIsMuted(true);
       });

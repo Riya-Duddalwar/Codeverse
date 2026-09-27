@@ -1,202 +1,295 @@
 import React from 'react';
-import { Shield, Github, Twitter, Disc as Discord, Linkedin, FileText, ArrowUp } from 'lucide-react';
+import { eventData } from '../data/eventData';
+import { ArrowUp, FileText, ArrowRight, Mail, Globe, Heart } from 'lucide-react';
 
 interface FooterProps {
   onPlayClick?: () => void;
+  onOpenModal: (type: 'register' | 'rulebook', url?: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onPlayClick }) => {
+export const Footer: React.FC<FooterProps> = ({ onPlayClick, onOpenModal }) => {
   const scrollToTop = () => {
     if (onPlayClick) onPlayClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navLinks = [
+    { label: 'Home', href: '#hero-container' },
+    { label: 'About CodeAI', href: '#about' },
+    { label: 'Mission', href: '#home-mission' },
+    { label: 'Event Overview', href: '#event-overview' },
+    { label: 'Timeline', href: '#timeline' },
+    { label: 'Phases', href: '#phases' },
+    { label: 'Prizes', href: '#prizes' },
+    { label: 'Partnership', href: '#partnership' },
+    { label: 'FAQ', href: '#faq' }
+  ];
+
   return (
     <footer
       style={{
-        background: '#07080c',
-        borderTop: '1px solid rgba(255, 30, 66, 0.2)',
-        padding: '4rem 0 2rem 0',
+        background: '#060608',
+        borderTop: '1.5px solid rgba(229, 9, 20, 0.3)',
+        padding: '5rem 0 2.5rem 0',
         position: 'relative',
         zIndex: 10
       }}
     >
       <div className="container">
+        {/* Main Footer Row */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '2fr 1fr 1fr 1fr',
-            gap: '2.5rem',
-            marginBottom: '3rem'
+            gridTemplateColumns: '1.8fr 1fr 1fr 1.2fr',
+            gap: '3rem',
+            marginBottom: '4rem'
           }}
           className="grid-cols-4"
         >
-          {/* Brand Info */}
+          {/* Col 1: Brand & Logo */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <div
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
+              <img
+                src="/CodeAi Logo.png"
+                alt="DJS CodeAI Logo"
                 style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '6px',
-                  background: 'linear-gradient(135deg, #ff1e42 0%, #750015 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  height: '46px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 0 10px rgba(229, 9, 20, 0.4))'
                 }}
-              >
-                <Shield size={20} color="#ffffff" />
-              </div>
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '1.25rem', color: '#ffffff' }}>
-                CODE<span style={{ color: '#ff1e42' }}>VERSE</span> 2.0
-              </span>
-            </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '1.5rem', maxWidth: '320px' }}>
-              The premier cyber heist hackathon assembling the sharpest minds to crack modern computing frontiers.
-            </p>
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              {[
-                { icon: <Discord size={18} />, href: 'https://discord.gg' },
-                { icon: <Github size={18} />, href: 'https://github.com' },
-                { icon: <Twitter size={18} />, href: 'https://x.com' },
-                { icon: <Linkedin size={18} />, href: 'https://linkedin.com' }
-              ].map((soc, idx) => (
-                <a
-                  key={idx}
-                  href={soc.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              />
+              <div>
+                <div
                   style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '8px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'var(--text-muted)',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = '#ff1e42';
-                    e.currentTarget.style.borderColor = '#ff1e42';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--text-muted)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    fontFamily: 'var(--font-display)',
+                    fontWeight: 900,
+                    fontSize: '1.35rem',
+                    letterSpacing: '0.06em',
+                    color: 'var(--color-cream)'
                   }}
                 >
-                  {soc.icon}
-                </a>
-              ))}
+                  CODE<span style={{ color: 'var(--color-red)' }}>VERSE</span> 2.0
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
+                  DJS CodeAI Presents
+                </div>
+              </div>
+            </div>
+
+            <p style={{ color: 'var(--color-muted)', fontSize: '0.9rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '340px' }}>
+              {eventData.about.description}
+            </p>
+
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span className="stamp-badge" style={{ fontSize: '0.72rem' }}>
+                MISSION: {eventData.mission}
+              </span>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Col 2: Navigation */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#ffd159', textTransform: 'uppercase', marginBottom: '1.2rem', letterSpacing: '0.1em' }}>
-              NAVIGATION
+            <h4
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.85rem',
+                color: 'var(--color-red)',
+                textTransform: 'uppercase',
+                marginBottom: '1.25rem',
+                letterSpacing: '0.12em',
+                fontWeight: 800
+              }}
+            >
+              // NAVIGATION
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-              {['Mission', 'Tracks', 'Timeline', 'Bounties', 'Rules'].map((item) => (
-                <li key={item}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+              {navLinks.slice(0, 5).map((item) => (
+                <li key={item.label}>
                   <a
-                    href={`#${item.toLowerCase()}`}
-                    style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (onPlayClick) onPlayClick();
+                      const target = document.querySelector(item.href);
+                      target?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    style={{
+                      color: 'var(--color-muted)',
+                      fontSize: '0.88rem',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s',
+                      fontFamily: 'var(--font-primary)'
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-cream)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Col 3: Resources & Event Links */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#ffd159', textTransform: 'uppercase', marginBottom: '1.2rem', letterSpacing: '0.1em' }}>
-              RESOURCES
+            <h4
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.85rem',
+                color: 'var(--color-red)',
+                textTransform: 'uppercase',
+                marginBottom: '1.25rem',
+                letterSpacing: '0.12em',
+                fontWeight: 800
+              }}
+            >
+              // RESOURCES
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+              <li>
+                <button
+                  onClick={() => {
+                    if (onPlayClick) onPlayClick();
+                    onOpenModal('rulebook', eventData.rulebookUrl);
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'var(--color-muted)',
+                    fontSize: '0.88rem',
+                    cursor: 'pointer',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
+                >
+                  <FileText size={14} color="#e50914" />
+                  <span>Rulebook</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    if (onPlayClick) onPlayClick();
+                    onOpenModal('register', eventData.registrationUrl);
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'var(--color-muted)',
+                    fontSize: '0.88rem',
+                    cursor: 'pointer',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
+                >
+                  <ArrowRight size={14} color="#e50914" />
+                  <span>Registration Portal</span>
+                </button>
+              </li>
               <li>
                 <a
-                  href="/rulebook.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+                  href="#faq"
+                  style={{ color: 'var(--color-muted)', fontSize: '0.88rem', textDecoration: 'none' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
                 >
-                  <FileText size={14} color="#ffd159" />
-                  <span>Rulebook (PDF)</span>
+                  FAQ & Inquiries
                 </a>
               </li>
               <li>
-                <a href="#rules" style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'none' }}>
-                  Code of Conduct
-                </a>
-              </li>
-              <li>
-                <a href="#sponsors" style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'none' }}>
-                  Sponsor Dossier
-                </a>
-              </li>
-              <li>
-                <a href="mailto:contact@codeverse.hack" style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'none' }}>
-                  Support & Helpdesk
+                <a
+                  href={`mailto:${eventData.partnership.contactEmail}`}
+                  style={{ color: 'var(--color-muted)', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
+                >
+                  <Mail size={14} />
+                  <span>Contact Organizing Team</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Heist Quote & Back to Top */}
+          {/* Col 4: Return to Top & Motto */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent-crimson)', textTransform: 'uppercase', marginBottom: '0.8rem', letterSpacing: '0.1em' }}>
-                SYNDICATE MOTTO
+              <h4
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.85rem',
+                  color: 'var(--color-cream)',
+                  textTransform: 'uppercase',
+                  marginBottom: '0.75rem',
+                  letterSpacing: '0.12em',
+                  fontWeight: 800
+                }}
+              >
+                EVENT DATE
               </h4>
-              <p style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', color: '#ffffff', fontSize: '0.95rem' }}>
-                "In code we trust, the mainframe we breach."
+              <p
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1.4rem',
+                  fontWeight: 900,
+                  color: 'var(--color-red)'
+                }}
+              >
+                {eventData.date}
+              </p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-muted)', marginTop: '0.25rem' }}>
+                {eventData.stats.teams} Teams • ₹99 Registration
               </p>
             </div>
 
             <button
               onClick={scrollToTop}
-              className="btn-secondary"
+              className="btn btn-secondary"
               style={{
                 alignSelf: 'flex-start',
-                padding: '0.5rem 1rem',
+                padding: '0.6rem 1.25rem',
                 fontSize: '0.8rem',
-                borderRadius: '6px',
+                marginTop: '1.5rem',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                marginTop: '1rem'
+                gap: '0.5rem'
               }}
             >
-              <ArrowUp size={14} />
+              <ArrowUp size={15} />
               <span>RETURN TO TOP</span>
             </button>
           </div>
         </div>
 
-        {/* Bottom Credits Line */}
+        {/* Bottom Bar */}
         <div
           style={{
-            borderTop: '1px solid rgba(255, 255, 255, 0.06)',
-            paddingTop: '1.5rem',
+            borderTop: '1px solid rgba(244, 240, 232, 0.08)',
+            paddingTop: '1.75rem',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.75rem',
-            color: 'var(--text-dim)'
+            fontSize: '0.78rem',
+            color: 'var(--color-dim)'
           }}
         >
-          <div>© 2026 CODEVERSE 2.0. ALL RIGHTS RESERVED. CLASSIFIED OPERATION.</div>
-          <div>ENCRYPTED WITH SHA-256 // ZERO-KNOWLEDGE READY</div>
+          <div>
+            © {eventData.year} {eventData.name}. ORGANIZED BY {eventData.organizer.toUpperCase()}. ALL RIGHTS RESERVED.
+          </div>
+          <div>
+            "{eventData.tagline}"
+          </div>
         </div>
       </div>
     </footer>

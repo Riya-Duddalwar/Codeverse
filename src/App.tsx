@@ -3,68 +3,100 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Cursor } from './components/Cursor';
 import { Home } from './pages/Home';
-import { Register } from './pages/Register';
-import { Success } from './pages/Success';
+import { UrlModal } from './components/UrlModal';
 import { useAudio } from './hooks/useAudio';
+import { eventData } from './data/eventData';
 
 export const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<'home' | 'register' | 'success'>('home');
-  const [registeredData, setRegisteredData] = useState<any>(null);
   const { isPlaying, toggleMusic, playClick } = useAudio();
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    title: string;
+    type: 'register' | 'rulebook' | 'partner';
+    targetUrl?: string;
+  }>({
+    isOpen: false,
+    title: '',
+    type: 'register',
+    targetUrl: ''
+  });
 
-  const handleNavigate = (page: string) => {
-    if (page === 'home' || page === 'register' || page === 'success') {
-      setCurrentPage(page as 'home' | 'register' | 'success');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleOpenModal = (type: 'register' | 'rulebook' | 'partner', url?: string) => {
+    const title =
+      type === 'register'
+        ? 'OFFICIAL REGISTRATION PORTAL'
+        : type === 'rulebook'
+        ? 'CODEVERSE 2.0 RULEBOOK'
+        : 'PARTNERSHIP DESK';
+
+    setModalState({
+      isOpen: true,
+      title,
+      type,
+      targetUrl: url || (type === 'register' ? eventData.registrationUrl : eventData.rulebookUrl)
+    });
+  };
+
+  const handleCloseModal = () => {
+    setModalState(prev => ({ ...prev, isOpen: false }));
+  };
+
+  // Cinematic Learn More Transition: Scroll down to reveal the main content world
+  const handleLearnMore = () => {
+    playClick();
+    const target = document.querySelector('#home-mission') || document.querySelector('#about');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: window.innerHeight * 1.1, behavior: 'smooth' });
     }
   };
 
-  const handleRegistrationSuccess = (data: any) => {
-    setRegisteredData(data);
-    setCurrentPage('success');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleRegister = () => {
+    playClick();
+    if (eventData.registrationUrl && eventData.registrationUrl.trim().length > 0) {
+      window.open(eventData.registrationUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      handleOpenModal('register', eventData.registrationUrl);
+    }
   };
 
   return (
-    <div className="relative min-h-screen text-light bg-dark">
-      {/* Custom Crosshair / Targeting Cursor */}
+    <div className="relative min-h-screen" style={{ backgroundColor: 'var(--color-black)', color: 'var(--color-text)' }}>
+      {/* Precision Tactical Cursor */}
       <Cursor />
 
-      {/* Persistent Navigation Bar */}
+      {/* Floating Pill Navbar */}
       <Navbar
         isPlaying={isPlaying}
         onToggleMusic={toggleMusic}
         onPlayClick={playClick}
-        onNavigate={handleNavigate}
-        currentPage={currentPage}
+        onOpenModal={handleOpenModal}
       />
 
-      {/* Main Page Content */}
-      {currentPage === 'home' && (
-        <Home
-          onNavigate={handleNavigate}
-          onPlayClick={playClick}
-        />
-      )}
+      {/* Main Single-Page Cinematic Flow */}
+      <Home
+        onLearnMoreClick={handleLearnMore}
+        onRegisterClick={handleRegister}
+        onPlayClick={playClick}
+        onOpenPartnerModal={() => handleOpenModal('partner')}
+      />
 
-      {currentPage === 'register' && (
-        <Register
-          onBack={() => handleNavigate('home')}
-          onSuccess={handleRegistrationSuccess}
-          onPlayClick={playClick}
-        />
-      )}
+      {/* Global Footer */}
+      <Footer
+        onPlayClick={playClick}
+        onOpenModal={handleOpenModal}
+      />
 
-      {currentPage === 'success' && (
-        <Success
-          formData={registeredData}
-          onHomeClick={() => handleNavigate('home')}
-          onPlayClick={playClick}
-        />
-      )}
-
-      {/* Global Heist Footer */}
-      <Footer onPlayClick={playClick} />
+      {/* External URL & Information Modal */}
+      <UrlModal
+        isOpen={modalState.isOpen}
+        onClose={handleCloseModal}
+        title={modalState.title}
+        type={modalState.type}
+        targetUrl={modalState.targetUrl}
+        onPlayClick={playClick}
+      />
     </div>
   );
 };

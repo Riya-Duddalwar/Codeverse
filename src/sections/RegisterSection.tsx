@@ -7,9 +7,5 @@ interface RegisterSectionProps {
 }
 
 export const RegisterSection: React.FC<RegisterSectionProps> = ({ onRegisterClick, onPlayClick }) => {
-  return (
-    <section id="register-section" className="relative">
-      <RegistrationCTA onRegisterClick={onRegisterClick} onPlayClick={onPlayClick} />
-    </section>
-  );
+  return <RegistrationCTA onRegisterClick={onRegisterClick} onPlayClick={onPlayClick} />;
 };

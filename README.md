@@ -1,250 +1,191 @@
-# Codeverse 2.0 | Operation: Digital Vault
+# CODEVERSE 2.0
 
-[![Vite](https://img.shields.io/badge/Vite-6.1-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-
-An immersive, cyber-heist-themed hackathon web platform engineered for **Codeverse 2.0**. Designed with high-impact noir aesthetics, smooth canvas scroll frame scrubber sequences, custom reticle cursors, dynamic audio feedback, interactive dossier modals, and end-to-end squad registration flows.
+> **DJS CodeAI Presents**  
+> *"It’s more than just a coding challenge: It’s a battle of logic, speed, and problem-solving."*
 
 ---
 
-## 📁 Repository File Structure
+## About
 
-```text
-codeverse2.0/
-│
-├── node_modules/                 # Installed npm packages and runtime binaries
-│
-├── public/                       # Static public assets served directly at root
-│   ├── audio/
-│   │   ├── heist-bg.mp3          # Ambient heist soundtrack audio file
-│   │   └── click.mp3             # Low-latency UI feedback click sound effect
-│   │
-│   ├── frames/
-│   │   ├── frame_000.webp        # Pre-rendered canvas animation frame sequence
-│   │   ├── frame_001.webp
-│   │   ├── frame_002.webp
-│   │   ├── ...
-│   │   └── frame_239.webp        # Frame 240 (Complete vault unlock state)
-│   │
-│   ├── images/
-│   │   ├── codeverse-logo.png    # Official event emblem
-│   │   ├── monet-mask.png        # Heist Dali/Monet mask asset
-│   │   ├── poster.png            # Event promotional poster graphic
-│   │   ├── background.png        # Cyber grid vault backdrop
-│   │   ├── paper-texture.png     # Dossier paper texture overlay
-│   │   ├── pin.png               # Corkboard push-pin graphic
-│   │   ├── paperclip.png         # Dossier paperclip graphic
-│   │   └── tape.png              # Dossier adhesive tape visual
-│   │
-│   ├── icons.svg                 # SVG sprite symbol sheet
-│   ├── favicon.svg               # Vector browser favicon
-│   └── rulebook.pdf              # Official hackathon mission dossier (PDF)
-│
-├── src/                          # Application source code
-│   │
-│   ├── assets/                   # Bundled local modules and image imports
-│   │
-│   ├── components/               # Modular UI components
-│   │   ├── Navbar.tsx            # Sticky header with audio toggle and progress bar
-│   │   ├── Hero.tsx              # Cinematic hero section with live countdown
-│   │   ├── ScrollAnimation.tsx   # Canvas 240-frame scrubber with dynamic HUD
-│   │   ├── AboutEvent.tsx        # Event dossier, backstory, and core pillars
-│   │   ├── EventDetails.tsx      # Sector tracks (AI, Web3, Cyber, Open)
-│   │   ├── Timeline.tsx          # 36-hour chronological heist schedule
-│   │   ├── Prizes.tsx            # Prize vault, podium cards, and bounties
-│   │   ├── Rules.tsx             # Code of conduct, rules tabs, and PDF link
-│   │   ├── Sponsors.tsx          # Partner syndicate and sponsorship CTA
-│   │   ├── RegistrationCTA.tsx   # High-converting registration banner
-│   │   ├── RegistrationForm.tsx  # Dynamic multi-member squad registration form
-│   │   ├── Footer.tsx            # Syndicate footer with navigation & socials
-│   │   └── Cursor.tsx            # Custom cyber targeting reticle cursor
-│   │
-│   ├── sections/                 # Page section wrappers
-│   │   ├── HeistIntro.tsx        # Hero & prologue entry section
-│   │   ├── MissionSection.tsx    # Mission background section
-│   │   ├── EventSection.tsx      # Combined tracks and timeline section
-│   │   ├── PrizeSection.tsx      # Prize pool and loot bounty section
-│   │   ├── RulesSection.tsx      # Guidelines and sponsor syndicate section
-│   │   └── RegisterSection.tsx   # Registration CTA section
-│   │
-│   ├── pages/                    # Route pages
-│   │   ├── Home.tsx              # Main interactive landing page
-│   │   ├── Register.tsx          # Dedicated squad registration workflow
-│   │   └── Success.tsx           # Registration confirmation pass with confetti
-│   │
-│   ├── hooks/                    # Reusable React hooks
-│   │   ├── useScrollProgress.ts  # Global scroll tracking & direction hook
-│   │   ├── useFrameAnimation.ts  # 240-frame image preloader & canvas scrubber
-│   │   └── useAudio.ts           # Ambient audio & UI click synthesizer hook
-│   │
-│   ├── data/                     # Single source of truth configuration files
-│   │   ├── eventData.ts          # Core event info, tracks, FAQ, and sponsors
-│   │   ├── prizes.ts             # Grand prizes, cash bounties, and perks
-│   │   ├── timeline.ts           # Phase-by-phase schedule milestones
-│   │   └── rules.ts              # Official rules & judging evaluation matrix
-│   │
-│   ├── styles/                   # Modular design system
-│   │   ├── globals.css           # Global resets, typography, glassmorphism, utilities
-│   │   ├── variables.css         # CSS tokens (colors, gradients, shadows, fonts)
-│   │   ├── animations.css        # Keyframes (glow, scanlines, glitches, marquee)
-│   │   └── responsive.css        # Responsive media queries (mobile/tablet/desktop)
-│   │
-│   ├── App.tsx                   # Top-level state, router, and shell layout
-│   ├── main.tsx                  # React 18 DOM mount entry point
-│   └── vite-env.d.ts             # Vite TypeScript type declarations
-│
-├── .gitignore                    # Git ignore file for node_modules and builds
-├── index.html                    # HTML5 template with Google Fonts & SEO meta
-├── package.json                  # Dependencies and build scripts
-├── package-lock.json             # Pinned dependency tree
-├── README.md                     # Developer setup & documentation guide
-├── tsconfig.json                 # Root TypeScript project references
-├── tsconfig.app.json             # App TypeScript compiler options
-├── tsconfig.node.json            # Node/Vite TypeScript compiler options
-└── vite.config.ts                # Vite bundler configuration
+**CodeVerse 2.0** is an immersive, high-stakes coding challenge event hosted by **DJS CodeAI** on **9th October 2026**.
+
+**DJS CodeAI** is a student-led community dedicated to exploring the frontiers of artificial intelligence and coding, bringing together passionate individuals to:
+- **LEARN**: Master algorithms, architecture, and technical problem-solving.
+- **CREATE**: Engineer resilient software systems and rapid prototypes.
+- **INNOVATE**: Push the boundaries of logic and computer science.
+
+The community connects **IDEAS**, **PEOPLE**, and **OPPORTUNITIES** with the ultimate mission of **turning learning into real-world impact**.
+
+---
+
+## Event Details
+
+| Detail | Official Specification |
+| :--- | :--- |
+| **Event Name** | CodeVerse 2.0 |
+| **Organizer** | DJS CodeAI |
+| **Date** | 9th October 2026 |
+| **Event Capacity** | 40 Teams |
+| **Team Size** | 3 Participants per Team |
+| **Total Participants** | 120 Aspiring Technologists |
+| **Registration Fee** | ₹99 per team |
+| **Total Prize Pool** | **₹25,000** |
+| **1st Prize (Grand Winner)** | ₹12,000 |
+| **2nd Prize (First Runner Up)** | ₹8,000 |
+| **3rd Prize (Second Runner Up)** | ₹5,000 |
+
+---
+
+## Mission
+
+```
+DETECT  ▸  DEBUG  ▸  REBUILD  ▸  RESTORE
+```
+
+Participants are challenged to:
+1. **Solve Challenges**: Unravel complex algorithmic and architectural problems.
+2. **Fix Bugs**: Trace and resolve subtle defects under high-pressure conditions.
+3. **Think Under Pressure**: Collaborate rapidly with their squad as the countdown advances.
+
+---
+
+## Visual Direction & Aesthetic
+
+Inspired directly by the official **CodeVerse 2.0 brochure** and the detective investigation board sequence:
+- **Palette**: Deep Tactical Black (`#08080a`), Vivid CodeVerse Red (`#e50914`), and Warm Paper Cream (`#f4f0e8`).
+- **Motifs**: Torn paper edges, semi-translucent scotch tape, pushpin evidence nodes, red connecting thread lines, halftone dot textures, and confidential mission dossiers.
+- **Typography**: Display headlines with `Syne`, body with `Outfit`, and telemetry with `JetBrains Mono`.
+
+---
+
+## Frame Animation
+
+The website's primary visual identity is powered by a scroll-controlled canvas frame sequence using the 60 high-resolution frames located in `/public/frames`:
+
+1. **Page Load**: Starts at the initial evidence board overview.
+2. **Scroll Progress**: As the user scrolls down, the sticky 100vh viewport scrubs through the 60 frames via `requestAnimationFrame` with sub-pixel DPR scaling and aspect-ratio preservation.
+3. **Visual Story Unfolds**: The camera zooms across paper clippings, evidence threads, and focuses on the masked investigator character on the **LEFT** side.
+4. **Cinematic Hero Reveal**: As the animation reaches completion, the event information on the **RIGHT** side reveals with a staggered blur-to-focus animation:
+   - Event organizer badge
+   - `CODEVERSE 2.0` title
+   - Official tagline & mission
+   - Event date (9th October 2026)
+   - `[ REGISTER NOW ]` and `[ LEARN MORE ]` action buttons.
+5. **Learn More Transition**: Clicking `[ LEARN MORE ]` smoothly scrolls the page downward, transitioning the entire hero experience upward and revealing the main website content world.
+
+---
+
+## Tech Stack
+
+- **Core**: [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Vite 6](https://vitejs.dev/)
+- **Styling**: Vanilla CSS Design System with CSS Custom Properties, modular stylesheets (`variables.css`, `globals.css`, `animations.css`, `responsive.css`)
+- **Animation**: Canvas 2D frame scrubber, `requestAnimationFrame`, CSS keyframes, SVG connecting lines
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Audio**: Web Audio API synth feedback + ambient soundtrack player
+
+---
+
+## Project Structure
+
+```
+codeverse/
+├── public/
+│   ├── audio/                      # Ambient event audio track
+│   ├── frames/                     # 60 official sequence frames (.webp)
+│   ├── CodeAi Logo.png             # Official DJS CodeAI logo
+│   └── favicon.svg                 # CodeVerse favicon
+├── src/
+│   ├── components/
+│   │   ├── AboutSection.tsx        # "About CodeAI" with pillars & connections
+│   │   ├── Cursor.tsx              # Tactical custom reticle cursor
+│   │   ├── DomainsSection.tsx      # Data-driven domains / classified state
+│   │   ├── EventOverview.tsx       # "Solve challenges, fix bugs, think under pressure"
+│   │   ├── FAQSection.tsx          # Accordion with verified official Q&As
+│   │   ├── Footer.tsx              # Brand footer, navigation & copyright
+│   │   ├── Hero.tsx                # Cinematic canvas frame animation & reveal
+│   │   ├── HomeMission.tsx         # "Detect, Debug, Rebuild, Restore"
+│   │   ├── Navbar.tsx              # Floating pill navbar with persistent CTAs
+│   │   ├── PartnershipSection.tsx  # "Become a Partner" & outreach
+│   │   ├── PhasesSection.tsx       # Interactive dual-phase (Phase 1 & Phase 2)
+│   │   ├── PrizesSection.tsx       # Official ₹25,000 prize pool podium
+│   │   ├── StatsSection.tsx        # 40 teams, 120 participants, ₹99 fee
+│   │   ├── TimelineSection.tsx     # 09 OCT 2026 confirmed event date
+│   │   └── UrlModal.tsx            # Graceful modal for external registration / rulebook
+│   ├── data/
+│   │   ├── eventData.ts            # CENTRALIZED SOURCE OF TRUTH
+│   │   └── framesData.ts           # 60-frame path manifest
+│   ├── hooks/
+│   │   ├── useAudio.ts             # Soundtrack & tactical SFX hook
+│   │   ├── useFrameAnimation.ts    # High-performance canvas frame hook
+│   │   └── useScrollProgress.ts    # Window scroll progress tracking
+│   ├── pages/
+│   │   └── Home.tsx                # Master page layout
+│   ├── styles/
+│   │   ├── animations.css          # Motion tokens & keyframes
+│   │   ├── globals.css             # Base styles, paper effects, pushpins
+│   │   ├── responsive.css          # Tablet & mobile breakpoints
+│   │   └── variables.css           # Color tokens & typography
+│   ├── App.tsx                     # Main application entry
+│   └── main.tsx                    # React DOM root
+├── index.html                      # HTML root template with Google Fonts
+├── package.json                    # Dependencies and scripts
+├── tsconfig.json                   # TypeScript configuration
+└── vite.config.ts                  # Vite build configuration
 ```
 
 ---
 
-## 🚀 Quick Start for Developers
+## Centralized Event Data (`src/data/eventData.ts`)
 
-### Prerequisites
+All official event information is managed centrally in [`src/data/eventData.ts`](file:///c:/Users/Duddalwar/OneDrive/Desktop/codeverse/src/data/eventData.ts). No event details are hardcoded across disparate components.
 
-- **Node.js**: `v18.0.0` or higher (Recommended: `v20+` or `v24+`)
-- **NPM**: `v9.0.0` or higher (or `pnpm` / `yarn`)
+### Updating Links
 
-### 1. Installation
+To link the official **Unstop registration** or **Rulebook PDF**, modify the following fields in `src/data/eventData.ts`:
 
-Clone the repository and install all required dependencies:
+```typescript
+// src/data/eventData.ts
 
+export const eventData = {
+  // ...
+  registrationUrl: "https://unstop.com/o/YOUR_CODEVERSE_LINK", // Paste official Unstop link here
+  rulebookUrl: "https://your-domain.com/rulebook.pdf",          // Paste official rulebook URL here
+  // ...
+};
+```
+
+Once updated, both navbar buttons, hero CTAs, and footer links will automatically redirect to the designated URLs.
+
+---
+
+## Running Locally
+
+### 1. Install dependencies
 ```bash
-git clone https://github.com/Riya-Duddalwar/Codeverse.git
-cd codeverse
 npm install
 ```
 
-### 2. Run Development Server
-
-Start the local Vite dev server with hot module replacement (HMR):
-
+### 2. Start development server
 ```bash
 npm run dev
 ```
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-Open your browser and navigate to:
-```text
-http://localhost:5173
-```
-
-### 3. Production Build
-
-Validate TypeScript types and build the optimized production bundle:
-
+### 3. Production build
 ```bash
 npm run build
 ```
 
-Preview the production build locally:
-
+### 4. Preview production build
 ```bash
 npm run preview
 ```
 
 ---
 
-## 🛠️ Architecture & Key Systems
+## License & Credits
 
-### 1. Centralized Data Architecture (`src/data/`)
-All content displayed throughout the application is decoupled from UI components and cleanly structured in TypeScript data files:
-- **`src/data/eventData.ts`**: Event title, dates, venue, FAQ items, and track definitions.
-- **`src/data/prizes.ts`**: Grand bounties, category awards, and sponsor grants.
-- **`src/data/timeline.ts`**: 36-hour schedule phases, timestamps, and milestones.
-- **`src/data/rules.ts`**: Evaluation criteria weights and rules of conduct.
-
-### 2. 240-Frame Scroll Canvas Scrubber (`src/hooks/useFrameAnimation.ts`)
-- Preloads image frames (`/public/frames/frame_000.webp` to `frame_239.webp`) into memory.
-- Uses high-performance HTML5 2D Canvas context rendering synchronized with viewport scroll percentage.
-- Includes procedural fallback vector animations if frames are pending or missing.
-
-### 3. Audio Controller (`src/hooks/useAudio.ts`)
-- Plays ambient heist background music (`/public/audio/heist-bg.mp3`) with soft volume ducking.
-- Provides crisp interactive sound effects (`/public/audio/click.mp3`) with Web Audio API synthetic osc fallback.
-
-### 4. Custom Targeting Cursor (`src/components/Cursor.tsx`)
-- High-precision crosshair and reticle ring that magnetically responds to interactive links, buttons, and form inputs.
-- Automatically disables on touch/mobile devices for native touch performance.
-
-### 5. Multi-Member Squad Registration (`src/components/RegistrationForm.tsx`)
-- Supports dynamic squad resizing (2 to 4 hackers per team).
-- Automatically adds/removes team member fields with input validation.
-- Emits registered squad payload to `src/pages/Success.tsx` with animated confetti and clearance code generation.
-
----
-
-## 🎨 Design System & Customization
-
-The design system uses pure Vanilla CSS tokens defined in `src/styles/variables.css`:
-
-```css
-:root {
-  --bg-primary: #090a0f;           /* Noir vault black */
-  --accent-crimson: #ff1e42;       /* Money Heist signature red */
-  --accent-gold: #ffd159;          /* Vault bounty gold */
-  --accent-cyan: #00f2fe;          /* Cyber telemetry cyan */
-  --font-primary: 'Outfit', sans-serif;
-  --font-display: 'Syne', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
-```
-
-To modify colors, typography, or spacing across the entire platform, update the corresponding tokens in `src/styles/variables.css`.
-
----
-
-## 🔌 Connecting Backend & Database
-
-To connect the registration form to an API or database (e.g. Supabase, Firebase, Node.js API):
-
-1. Open `src/components/RegistrationForm.tsx`.
-2. Update `handleSubmit`:
-   ```typescript
-   const handleSubmit = async (e: React.FormEvent) => {
-     e.preventDefault();
-     setIsSubmitting(true);
-
-     const response = await fetch('/api/register', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify(formData)
-     });
-
-     if (response.ok) {
-       onSuccess(formData);
-     }
-     setIsSubmitting(false);
-   };
-   ```
-
----
-
-## 🚢 Deployment
-
-### Deploy to Vercel
-```bash
-npx vercel
-```
-
-### Deploy to Netlify
-```bash
-npx netlify deploy --prod
-```
-
-### Static Hosting (`dist/`)
-The output generated by `npm run build` is standard static HTML, CSS, and JS ready to be served on AWS S3, Cloudflare Pages, GitHub Pages, or Nginx.
-
----
-
-## 📄 License
-This project is open-source under the **MIT License**.
+- **Event**: CODEVERSE 2.0
+- **Organizer**: DJS CodeAI
+- **Date**: 9th October 2026
+- **Copyright**: © 2026 DJS CodeAI. All Rights Reserved.

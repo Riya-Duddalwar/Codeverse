@@ -1,101 +1,118 @@
-@keyframes pulseGlow {
+/* Keyframe Animations */
+
+@keyframes pulseRedGlow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(255, 30, 66, 0.4), inset 0 0 15px rgba(255, 30, 66, 0.2);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.35), inset 0 0 15px rgba(229, 9, 20, 0.15);
   }
   50% {
-    box-shadow: 0 0 30px rgba(255, 30, 66, 0.8), inset 0 0 25px rgba(255, 30, 66, 0.4);
+    box-shadow: 0 0 40px rgba(229, 9, 20, 0.7), inset 0 0 25px rgba(229, 9, 20, 0.35);
   }
 }
 
-@keyframes scanline {
-  0% {
-    transform: translateY(-100%);
+@keyframes threadPulse {
+  0%, 100% {
+    opacity: 0.6;
+    stroke-dashoffset: 0;
   }
-  100% {
-    transform: translateY(1000%);
-  }
-}
-
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    transform: translate(-2px, -2px);
-  }
-  60% {
-    transform: translate(2px, 2px);
-  }
-  80% {
-    transform: translate(2px, -2px);
-  }
-  100% {
-    transform: translate(0);
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 15;
   }
 }
 
-@keyframes floatSlow {
+@keyframes subtleFloat {
   0%, 100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-10px) rotate(1deg);
+    transform: translateY(-8px) rotate(0.5deg);
   }
 }
 
-@keyframes laserSweep {
+@keyframes badgeShimmer {
   0% {
-    left: -100%;
+    transform: translateX(-100%) skewX(-20deg);
   }
   50%, 100% {
-    left: 200%;
+    transform: translateX(250%) skewX(-20deg);
   }
 }
 
-@keyframes soundWave {
-  0%, 100% { height: 4px; }
-  50% { height: 20px; }
+@keyframes scrollBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+@keyframes radarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 3s infinite ease-in-out;
+@keyframes tickerMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Helper Classes */
+.animate-pulse-red {
+  animation: pulseRedGlow 3s infinite ease-in-out;
 }
 
 .animate-float {
-  animation: floatSlow 6s ease-in-out infinite;
+  animation: subtleFloat 5s ease-in-out infinite;
 }
 
-.animate-glitch:hover {
-  animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+.animate-scroll-bob {
+  animation: scrollBob 2s ease-in-out infinite;
 }
 
-.animate-marquee {
+.animate-ticker {
   display: flex;
   width: 200%;
-  animation: marquee 25s linear infinite;
+  animation: tickerMarquee 28s linear infinite;
 }
 
-.laser-shine {
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+.shimmer-effect {
   position: relative;
   overflow: hidden;
 }
 
-.laser-shine::after {
+.shimmer-effect::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 50%;
+  left: 0;
+  width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transform: skewX(-20deg);
-  animation: laserSweep 4s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  animation: badgeShimmer 4.5s infinite;
+  pointer-events: none;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
