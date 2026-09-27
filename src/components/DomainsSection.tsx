@@ -17,7 +17,7 @@ export const DomainsSection: React.FC<DomainsSectionProps> = ({ onPlayClick }) =
         className="section-padding halftone-overlay"
         style={{
           position: 'relative',
-          background: 'var(--color-charcoal)',
+          background: 'transparent',
           borderBottom: '1px solid rgba(244, 240, 232, 0.08)'
         }}
       >
@@ -109,10 +109,10 @@ export const DomainsSection: React.FC<DomainsSectionProps> = ({ onPlayClick }) =
   return (
     <section
       id="domains"
-      className="section-padding halftone-overlay"
+      className="section-padding"
       style={{
         position: 'relative',
-        background: 'var(--color-charcoal)',
+        background: 'transparent',
         borderBottom: '1px solid rgba(244, 240, 232, 0.08)'
       }}
     >

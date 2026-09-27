@@ -29,10 +29,10 @@ export const EventOverview: React.FC<EventOverviewProps> = ({ onPlayClick, onReg
   return (
     <section
       id="event-overview"
-      className="section-padding noise-subtle"
+      className="section-padding"
       style={{
         position: 'relative',
-        background: 'var(--color-black)',
+        background: 'transparent',
         borderBottom: '1px solid rgba(244, 240, 232, 0.08)'
       }}
     >

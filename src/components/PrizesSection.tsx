@@ -23,10 +23,10 @@ export const PrizesSection: React.FC<PrizesSectionProps> = ({ onPlayClick }) => 
   return (
     <section
       id="prizes"
-      className="section-padding noise-subtle"
+      className="section-padding"
       style={{
         position: 'relative',
-        background: 'var(--color-black)',
+        background: 'transparent',
         borderBottom: '1px solid rgba(244, 240, 232, 0.08)'
       }}
     >

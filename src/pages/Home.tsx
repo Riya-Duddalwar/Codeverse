@@ -39,41 +39,46 @@ export const Home: React.FC<HomeProps> = ({
         onRegisterClick={onRegisterClick}
       />
 
-      {/* 3. ABOUT CODEAI SECTION */}
-      <AboutSection onPlayClick={onPlayClick} />
+      {/* DETECTIVE BOARD BACKGROUND CONTAINER (FROM ABOUT THROUGH FOOTER) */}
+      <div className="detective-board-bg">
+        {/* 3. ABOUT CODEAI SECTION */}
+        <AboutSection onPlayClick={onPlayClick} />
 
-      {/* 4. EVENT OVERVIEW SECTION */}
-      <EventOverview
-        onPlayClick={onPlayClick}
-        onRegisterClick={onRegisterClick}
-      />
+        {/* 4. EVENT OVERVIEW SECTION */}
+        <EventOverview
+          onPlayClick={onPlayClick}
+          onRegisterClick={onRegisterClick}
+        />
 
-      {/* 5. EVENT STATS SECTION */}
-      <StatsSection onPlayClick={onPlayClick} />
+        {/* 5. EVENT STATS SECTION */}
+        <StatsSection onPlayClick={onPlayClick} />
 
-      {/* 6. TIMELINE SECTION */}
-      <TimelineSection onPlayClick={onPlayClick} />
+        {/* 6. TIMELINE SECTION */}
+        <TimelineSection onPlayClick={onPlayClick} />
 
-      {/* 7. PHASES SECTION (PHASE 01 & PHASE 02) */}
-      <PhasesSection
-        onPlayClick={onPlayClick}
-        onRegisterClick={onRegisterClick}
-      />
+        {/* 7. PHASES SECTION (PHASE 01 & PHASE 02) */}
+        <PhasesSection
+          onPlayClick={onPlayClick}
+          onRegisterClick={onRegisterClick}
+        />
 
-      {/* 8. DOMAINS SECTION */}
-      <DomainsSection onPlayClick={onPlayClick} />
+        {/* 8. DOMAINS SECTION */}
+        <DomainsSection onPlayClick={onPlayClick} />
 
-      {/* 9. PRIZES SECTION */}
-      <PrizesSection onPlayClick={onPlayClick} />
+        {/* 9. PRIZES SECTION */}
+        <PrizesSection onPlayClick={onPlayClick} />
 
-      {/* 10. BECOME A PARTNER SECTION */}
-      <PartnershipSection
-        onPlayClick={onPlayClick}
-        onOpenPartnerModal={onOpenPartnerModal}
-      />
+        {/* 10. BECOME A PARTNER SECTION */}
+        <PartnershipSection
+          onPlayClick={onPlayClick}
+          onOpenPartnerModal={onOpenPartnerModal}
+        />
 
-      {/* 11. FAQ SECTION */}
-      <FAQSection onPlayClick={onPlayClick} />
+        {/* 11. FAQ SECTION */}
+        <FAQSection onPlayClick={onPlayClick} />
+      </div>
     </main>
   );
 };
+
+export default Home;

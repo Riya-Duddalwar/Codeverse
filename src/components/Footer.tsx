@@ -28,7 +28,9 @@ export const Footer: React.FC<FooterProps> = ({ onPlayClick, onOpenModal }) => {
   return (
     <footer
       style={{
-        background: '#060608',
+        background: 'rgba(6, 6, 8, 0.88)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderTop: '1.5px solid rgba(229, 9, 20, 0.3)',
         padding: '5rem 0 2.5rem 0',
         position: 'relative',
